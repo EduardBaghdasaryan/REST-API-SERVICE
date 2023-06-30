@@ -1,4 +1,4 @@
-import { dbHost, dbName, dbUser, dbPassword } from "../env.dev.js"
+import { dbHost, dbName, dbUser, dbPassword } from "../env.dev.js";
 
 export default {
   HOST: dbHost,

@@ -1,3 +1,3 @@
-import { authSecret } from '../env.dev';
+import { jwtSecret } from '../env.dev.js';
 
-export const secret = authSecret;
+export default jwtSecret;
