@@ -14,7 +14,8 @@ const dbUser = process.env.DB_USER || '';
 const dbPassword = process.env.DB_PASSWORD || '';
 const jwtExpiration = process.env.JWT_EXPIRATION || '';
 const jwtSecret = process.env.JWT_SECRET || ''
-
+const refreshTokenSecretKey = process.env.REFRESH_TOKEN_SECRET
+const refreshTokenExpiration = process.env.REFRESH_TOKEN_EXPIRATION
 
 const filesPath = path.join(__dirname, 'files');
 
@@ -48,5 +49,7 @@ export {
   dbPassword,
   jwtExpiration,
   jwtSecret,
-  filesPath
+  filesPath,
+  refreshTokenSecretKey,
+  refreshTokenExpiration
 };

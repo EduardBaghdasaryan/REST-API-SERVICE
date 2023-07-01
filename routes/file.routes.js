@@ -2,14 +2,14 @@ import express from 'express';
 
 import fileController from '../controllers/file.controller.js';
 
-import isAuth from "../middleware/isAuth.js";
+import isAuth from "../middlewares/isAuth.js";
 
 
 const fileRouter = express.Router();
 
 fileRouter.post('/upload', isAuth, fileController.uploadFile);
 
-fileRouter.get('/list', fileController.getFileList);
+fileRouter.get('/list', isAuth, fileController.getFileList);
 
 // Delete file - Delete a document from the database and local storage
 fileRouter.delete('/delete/:id', (req, res) => {

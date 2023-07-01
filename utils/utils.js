@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { jwtSecret, jwtExpiration } from '../env.dev.js';
+import { jwtSecret, jwtExpiration, refreshTokenExpiration, refreshTokenSecretKey } from '../env.dev.js';
 
 import fs from 'fs';
 import path from 'path';
@@ -11,7 +11,7 @@ const generateBearerToken = (userId) => {
 };
 
 const generateRefreshToken = async (userId) => {
-    return jwt.sign({ id: userId }, jwtSecret, { expiresIn: jwtExpiration });
+    return jwt.sign({ id: userId }, refreshTokenSecretKey, { expiresIn: refreshTokenExpiration });
 };
 
 const saveFile = async (tempFilePath, fileName) => {

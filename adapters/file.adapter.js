@@ -12,11 +12,12 @@ const createFile = async (fileData) => {
 
 const getFileListFromDB = async (listSize, offset) => {
     try {
-        console.log(333333333333);
-
-        return await FileModel.find().limit(listSize).skip(offset).exec();
+        return await FileModel.findAll({
+            limit: listSize,
+            offset: offset
+        });
     } catch (error) {
-        throw new Error('Failed to retrieve file list from the database');
+        throw new Error(error);
     }
 };
 
