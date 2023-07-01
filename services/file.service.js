@@ -20,10 +20,22 @@ const uploadFile = async (fileData) => {
 
         return await fileAdapter.createFile(file);
     } catch (error) {
-        throw new Error(error.message);
+        throw new Error(error);
+    }
+};
+
+const fetchFileList = async (listSize, page) => {
+    try {
+        console.log(2222222);
+
+        const offset = (page - 1) * listSize;
+        return await fileAdapter.getFileListFromDB(listSize, offset);
+    } catch (error) {
+        throw new Error(error);
     }
 };
 
 export default {
     uploadFile,
+    fetchFileList
 };
