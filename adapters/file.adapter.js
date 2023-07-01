@@ -7,7 +7,6 @@ const FileModel = db.files;
 
 const createFile = async (fileData) => {
     try {
-        console.log(1111111111);
         return await FileModel.create(fileData);
     } catch (error) {
         throw new Error(error.message);
@@ -49,7 +48,8 @@ const updateFileById = async (id, file) => {
             throw new Error('File not found');
         }
 
-        const oldFilePath = existingFile.name;
+        const oldFilePath = existingFile.path;
+        
         await utils.deleteFileFromStorage(oldFilePath)
 
         const updatedFile = await existingFile.update({

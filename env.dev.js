@@ -17,7 +17,7 @@ const jwtSecret = process.env.JWT_SECRET || ''
 const refreshTokenSecretKey = process.env.REFRESH_TOKEN_SECRET
 const refreshTokenExpiration = process.env.REFRESH_TOKEN_EXPIRATION
 
-const filesPath = path.join(__dirname, 'files');
+const filesPath = path.join(__dirname);
 
 
 if (!port) {

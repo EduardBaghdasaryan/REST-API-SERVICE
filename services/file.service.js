@@ -4,14 +4,14 @@ import utils from '../utils/utils.js';
 
 const uploadFile = async (fileData) => {
     try {
-        const { filename } = fileData;
-
+        const { filename, path } = fileData;
         const file = {
             name: filename,
             extension: utils.getExtension(filename),
             mimeType: fileData.mimetype,
             size: fileData.size,
             uploadDate: new Date(),
+            path
         };
 
         return await fileAdapter.createFile(file);
@@ -37,7 +37,7 @@ const deleteFile = async (id) => {
             throw new Error('File not found');
         }
         await fileAdapter.deleteFile(id);
-        await utils.deleteFileFromStorage(file.name);
+        await utils.deleteFileFromStorage(file.path);
     } catch (error) {
         throw new Error(error);
     }

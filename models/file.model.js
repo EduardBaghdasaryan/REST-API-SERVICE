@@ -25,6 +25,10 @@ export default (sequelize, Sequelize) => {
             type: Sequelize.DATE,
             allowNull: false,
         },
+        path: {
+            type: Sequelize.STRING(45),
+            allowNull: false,
+        },
     }, {
         timestamps: false,
         freezeTableName: true,
