@@ -1,11 +1,7 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { jwtSecret } from '../env.dev.js';
-import { jwtExpiration } from '../env.dev.js';
+import utils from '../utils/utils.js'
 import validator from 'validator';
 import userAdapter from '../adapters/user.adapter.js';
-
-
 
 const signup = async (identifier, password) => {
     try {
@@ -29,8 +25,8 @@ const signup = async (identifier, password) => {
             ? await userAdapter.emailSignup(identifier, hashedPassword)
             : await userAdapter.phoneNumberSignup(identifier, hashedPassword);
 
-        const bearerToken = generateBearerToken(user.id);
-        const refreshToken = await generateRefreshToken();
+        const bearerToken = utils.generateBearerToken(user.id);
+        const refreshToken = await utils.generateRefreshToken();
 
         return { bearerToken, refreshToken };
     } catch (error) {
@@ -38,16 +34,31 @@ const signup = async (identifier, password) => {
     }
 };
 
-const generateBearerToken = (userId) => {
-    const bearerToken = jwt.sign({ id: userId }, jwtSecret, { expiresIn: jwtExpiration });
-    return bearerToken;
-};
+const signin = async (email, phoneNumber, password) => {
+    let user;
 
-const generateRefreshToken = async () => {
-    const refreshToken = jwt.sign({}, jwtSecret, { expiresIn: jwtExpiration });
-    return refreshToken;
-};
+    if (email) {
+        user = await userAdapter.findUserByEmail(email);
+    } else {
+        user = await userAdapter.findUserByPhoneNumber(phoneNumber);
+    }
+
+    if (!user) {
+        throw new Error('Invalid credentials');
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+        throw new Error('Invalid credentials');
+    }
+
+    return {
+        bearerToken: utils.generateBearerToken(user.id),
+        refreshToken: await utils.generateRefreshToken()
+    };
+}
 
 export default {
     signup,
+    signin
 };
