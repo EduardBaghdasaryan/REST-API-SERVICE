@@ -56,8 +56,25 @@ const downloadFileById = async (req, res) => {
 
         res.download(result);
     } catch (error) {
-        console.error(error);
         res.status(500).json({ error: error.message });
+    }
+};
+
+const updateFileById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { file } = req;
+
+        if (!file) {
+            return res.status(400).json({ error: 'No file provided' });
+        }
+
+        const updatedFile = await fileService.updateFile(id, file);
+
+        res.json(updatedFile);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to update the file' });
     }
 };
 
@@ -66,5 +83,6 @@ export default {
     getFileList,
     deleteFile,
     getFileById,
-    downloadFileById
+    downloadFileById,
+    updateFileById
 };

@@ -31,7 +31,6 @@ const fetchFileList = async (listSize, page) => {
 
 const deleteFile = async (id) => {
     try {
-        console.log(id);
 
         const file = await fileAdapter.getFileById(id);
         if (!file) {
@@ -53,9 +52,19 @@ const getFileById = async (id) => {
     }
 };
 
+const updateFile = async (id, file) => {
+    try {
+        return await fileAdapter.updateFileById(id, file);
+
+    } catch (error) {
+        throw new Error('Failed to update the file in the database');
+    }
+};
+
 export default {
     uploadFile,
     fetchFileList,
     deleteFile,
-    getFileById
+    getFileById,
+    updateFile
 };

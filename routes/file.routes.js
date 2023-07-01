@@ -17,9 +17,6 @@ fileRouter.get('/:id', fileController.getFileById);
 
 fileRouter.get('/download/:id', fileController.downloadFileById);
 
-// Update file - Update the current document to a new one in the database and local storage
-fileRouter.put('/update/:id', (req, res) => {
-    // Handle file update logic
-});
+fileRouter.put('/update/:id', fileController.updateFileById)
 
 export default fileRouter;

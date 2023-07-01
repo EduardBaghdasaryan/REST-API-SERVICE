@@ -1,4 +1,7 @@
 import db from '../models/index.model.js';
+import fs from 'fs'
+import utils from '../utils/utils.js';
+import { filesPath } from '../env.dev.js';
 
 const FileModel = db.files;
 
@@ -24,7 +27,6 @@ const getFileListFromDB = async (listSize, offset) => {
 
 const getFileById = async (id) => {
     try {
-        console.log('aaaaaaaaa', id);
         return await FileModel.findOne({ where: { id } });
     } catch (error) {
         throw new Error(error);
@@ -39,9 +41,31 @@ const deleteFile = async (id) => {
     }
 };
 
+const updateFileById = async (id, file) => {
+    try {
+        const existingFile = await FileModel.findOne({ where: { id } });
+
+        if (!existingFile) {
+            throw new Error('File not found');
+        }
+
+        const oldFilePath = existingFile.name;
+        await utils.deleteFileFromStorage(oldFilePath)
+
+        const updatedFile = await existingFile.update({
+            name: file.originalname,
+            path: file.path,
+        });
+
+        return updatedFile;
+    } catch (error) {
+        throw new Error('Failed to update the file in the database');
+    }
+};
 export default {
     createFile,
     getFileListFromDB,
     getFileById,
-    deleteFile
+    deleteFile,
+    updateFileById
 };
