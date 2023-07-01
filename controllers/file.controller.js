@@ -36,8 +36,20 @@ const deleteFile = async (req, res) => {
     }
 };
 
+const getFileById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const file = await fileService.getFileById(id);
+        res.json(file);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to retrieve the file' });
+    }
+};
+
 export default {
     uploadFile,
     getFileList,
-    deleteFile
+    deleteFile,
+    getFileById
 };

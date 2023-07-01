@@ -44,8 +44,18 @@ const deleteFile = async (id) => {
     }
 };
 
+
+const getFileById = async (id) => {
+    try {
+        return await fileAdapter.getFileById(id);
+    } catch (error) {
+        throw new Error('Failed to retrieve the file from the database');
+    }
+};
+
 export default {
     uploadFile,
     fetchFileList,
-    deleteFile
+    deleteFile,
+    getFileById
 };

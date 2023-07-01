@@ -24,6 +24,7 @@ const getFileListFromDB = async (listSize, offset) => {
 
 const getFileById = async (id) => {
     try {
+        console.log('aaaaaaaaa', id);
         return await FileModel.findOne({ where: { id } });
     } catch (error) {
         throw new Error(error);

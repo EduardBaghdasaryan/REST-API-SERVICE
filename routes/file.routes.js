@@ -11,13 +11,10 @@ fileRouter.post('/upload', isAuth, fileController.uploadFile);
 
 fileRouter.get('/list', isAuth, fileController.getFileList);
 
-// Delete file - Delete a document from the database and local storage
 fileRouter.delete('/delete/:id', fileController.deleteFile);
 
 // Get file info - Get information about a specific file
-fileRouter.get('/:id', (req, res) => {
-    // Handle file information retrieval logic
-});
+fileRouter.get('/:id', fileController.getFileById);
 
 // Download file - Download a specific file
 fileRouter.get('/download/:id', (req, res) => {
