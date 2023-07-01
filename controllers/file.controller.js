@@ -1,4 +1,6 @@
 import fileService from '../services/file.service.js';
+import { filesPath } from '../env.dev.js';
+
 
 const uploadFile = async (req, res) => {
     try {
@@ -42,8 +44,20 @@ const getFileById = async (req, res) => {
         const file = await fileService.getFileById(id);
         res.json(file);
     } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+const downloadFileById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const file = await fileService.getFileById(id);
+        const result = `${filesPath}/${file.name}`
+
+        res.download(result);
+    } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Failed to retrieve the file' });
+        res.status(500).json({ error: error.message });
     }
 };
 
@@ -51,5 +65,6 @@ export default {
     uploadFile,
     getFileList,
     deleteFile,
-    getFileById
+    getFileById,
+    downloadFileById
 };
