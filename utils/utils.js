@@ -6,7 +6,7 @@ import path from 'path';
 
 import { filesPath } from '../env.dev.js';
 
-const generateBearerToken = (userId) => {
+const generateBearerToken = async (userId) => {
     return jwt.sign({ id: userId }, jwtSecret, { expiresIn: jwtExpiration });
 };
 

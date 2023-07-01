@@ -7,6 +7,7 @@ import upload from "./middlewares/multerConfig.js";
 
 import authRouter from './routes/auth.routes.js';
 import fileRouter from "./routes/file.routes.js";
+import userRouter from "./routes/user.routes.js";
 
 const app = express();
 
@@ -23,6 +24,8 @@ app.use('/api/file', upload.single('file'))
 app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/file', fileRouter);
+app.use('/api/info', userRouter);
+
 
 
 

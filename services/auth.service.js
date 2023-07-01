@@ -27,7 +27,7 @@ const signup = async (identifier, password) => {
             ? await userAdapter.emailSignup(identifier, hashedPassword)
             : await userAdapter.phoneNumberSignup(identifier, hashedPassword);
 
-        const bearerToken = utils.generateBearerToken(user.id);
+        const bearerToken = await utils.generateBearerToken(user.id);
         const refreshToken = await utils.generateRefreshToken(user.id);
 
         return { bearerToken, refreshToken };
@@ -55,7 +55,7 @@ const signin = async (email, phoneNumber, password) => {
     }
 
     return {
-        bearerToken: utils.generateBearerToken(user.id),
+        bearerToken: await utils.generateBearerToken(user.id),
         refreshToken: await utils.generateRefreshToken(user.id)
     };
 }
