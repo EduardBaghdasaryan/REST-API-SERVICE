@@ -8,8 +8,7 @@ authRouter.post('/signup', authController.signup);
 
 authRouter.post('/signin', authController.signin);
 
-authRouter.post('/signin/new_token', (req, res) => {
-    // Handle refresh token logic
-});
+authRouter.post('/signin/new_token', authController.refreshBearerToken);
+
 
 export default authRouter;

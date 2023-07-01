@@ -32,7 +32,19 @@ const signin = async (req, res, next) => {
     }
 };
 
+const refreshBearerToken = async (req, res, next) => {
+    try {
+        const { refreshToken } = req.body;
+        const { bearerToken } = await authService.refreshBearerToken(refreshToken);
+        res.json({ bearerToken });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
 export default {
     signup,
     signin,
+    refreshBearerToken
 };

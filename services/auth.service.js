@@ -2,6 +2,8 @@ import bcrypt from 'bcrypt';
 import utils from '../utils/utils.js'
 import validator from 'validator';
 import userAdapter from '../adapters/user.adapter.js';
+import jwt from 'jsonwebtoken';
+import { jwtSecret } from '../env.dev.js';
 
 const signup = async (identifier, password) => {
     try {
@@ -26,7 +28,7 @@ const signup = async (identifier, password) => {
             : await userAdapter.phoneNumberSignup(identifier, hashedPassword);
 
         const bearerToken = utils.generateBearerToken(user.id);
-        const refreshToken = await utils.generateRefreshToken();
+        const refreshToken = await utils.generateRefreshToken(user.id);
 
         return { bearerToken, refreshToken };
     } catch (error) {
@@ -54,11 +56,41 @@ const signin = async (email, phoneNumber, password) => {
 
     return {
         bearerToken: utils.generateBearerToken(user.id),
-        refreshToken: await utils.generateRefreshToken()
+        refreshToken: await utils.generateRefreshToken(user.id)
     };
 }
 
+const refreshBearerToken = async (refreshToken) => {
+    try {
+        const decoded = jwt.verify(refreshToken, jwtSecret);
+
+        console.log(decoded);
+
+        if (!decoded || !decoded.id) {
+            throw new Error('Invalid refresh token');
+        }
+
+        const user = await userAdapter.findUserById(decoded.id);
+
+        if (!user) {
+            throw new Error('User not found');
+        }
+
+        const bearerToken = utils.generateBearerToken(user.id);
+
+        return {
+            bearerToken,
+            refreshToken: await utils.generateRefreshToken(user.id),
+        };
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+
+
+
 export default {
     signup,
-    signin
+    signin,
+    refreshBearerToken
 };

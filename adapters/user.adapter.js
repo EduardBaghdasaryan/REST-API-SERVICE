@@ -35,9 +35,19 @@ const findUserByPhoneNumber = async (phoneNumber) => {
     }
 };
 
+const findUserById = async (userId) => {
+    try {
+        return await UsersModel.findOne({ id: userId });
+
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 export default {
     emailSignup,
     phoneNumberSignup,
     findUserByEmail,
-    findUserByPhoneNumber
+    findUserByPhoneNumber,
+    findUserById
 }

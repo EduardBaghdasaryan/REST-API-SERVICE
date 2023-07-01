@@ -5,8 +5,8 @@ const generateBearerToken = (userId) => {
     return jwt.sign({ id: userId }, jwtSecret, { expiresIn: jwtExpiration });
 };
 
-const generateRefreshToken = async () => {
-    return jwt.sign({}, jwtSecret, { expiresIn: jwtExpiration });
+const generateRefreshToken = async (userId) => {
+    return jwt.sign({ id: userId }, jwtSecret, { expiresIn: jwtExpiration });
 };
 
 export default {
