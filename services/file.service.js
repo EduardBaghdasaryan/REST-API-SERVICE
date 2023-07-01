@@ -4,10 +4,7 @@ import utils from '../utils/utils.js';
 
 const uploadFile = async (fileData) => {
     try {
-        const { path, filename } = fileData;
-        const fileName = utils.generateFileName(filename);
-
-        const filePath = await utils.saveFile(path, fileName);
+        const { filename } = fileData;
 
         const file = {
             name: filename,
@@ -15,7 +12,6 @@ const uploadFile = async (fileData) => {
             mimeType: fileData.mimetype,
             size: fileData.size,
             uploadDate: new Date(),
-            filePath,
         };
 
         return await fileAdapter.createFile(file);
@@ -26,8 +22,6 @@ const uploadFile = async (fileData) => {
 
 const fetchFileList = async (listSize, page) => {
     try {
-        console.log(2222222);
-
         const offset = (page - 1) * listSize;
         return await fileAdapter.getFileListFromDB(listSize, offset);
     } catch (error) {
@@ -35,7 +29,23 @@ const fetchFileList = async (listSize, page) => {
     }
 };
 
+const deleteFile = async (id) => {
+    try {
+        console.log(id);
+
+        const file = await fileAdapter.getFileById(id);
+        if (!file) {
+            throw new Error('File not found');
+        }
+        await fileAdapter.deleteFile(id);
+        await utils.deleteFileFromStorage(file.name);
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 export default {
     uploadFile,
-    fetchFileList
+    fetchFileList,
+    deleteFile
 };

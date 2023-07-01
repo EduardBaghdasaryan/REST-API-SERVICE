@@ -1,9 +1,11 @@
 import multer from 'multer';
 
 const storage = multer.diskStorage({
-    destination: 'files/',
+    destination: (req, file, cb) => {
+        cb(null, "files");
+    },
     filename: (req, file, cb) => {
-        cb(null, new Date().toISOString() + "-" + file.originalname);
+        cb(null, new Date().toISOString() + file.originalname);
     },
 });
 

@@ -14,30 +14,27 @@ const generateRefreshToken = async (userId) => {
     return jwt.sign({ id: userId }, refreshTokenSecretKey, { expiresIn: refreshTokenExpiration });
 };
 
-const saveFile = async (tempFilePath, fileName) => {
-    const targetFilePath = path.join(filesPath, fileName);
-    try {
-        fs.renameSync(tempFilePath, targetFilePath);
-        return targetFilePath;
-    } catch (error) {
-        throw new Error(`Failed to save file: ${error.message}`);
-    }
-}
-
-const generateFileName = (originalname) => {
-    const timestamp = new Date().getTime();
-    const extension = getExtension(originalname);
-    return `${timestamp}.${extension}`;
-};
-
 
 const getExtension = (filename) => filename.split('.').pop();
+
+const deleteFileFromStorage = (filename) => {
+    const filePath = path.join(filesPath, filename);
+    return new Promise((resolve, reject) => {
+        fs.unlink((filePath), (error) => {
+            console.log(1111111111111);
+            if (error) {
+                reject(new Error(error));
+            } else {
+                resolve();
+            }
+        });
+    });
+};
 
 
 export default {
     generateBearerToken,
     generateRefreshToken,
     getExtension,
-    saveFile,
-    generateFileName
+    deleteFileFromStorage
 }

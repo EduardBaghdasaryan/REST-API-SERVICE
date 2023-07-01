@@ -15,7 +15,6 @@ const uploadFile = async (req, res) => {
 };
 
 const getFileList = async (req, res) => {
-    console.log(1111111111111);
     try {
         const { listSize = 10, page = 1 } = req.query;
         const fileList = await fileService.fetchFileList(parseInt(listSize), parseInt(page));
@@ -26,7 +25,19 @@ const getFileList = async (req, res) => {
     }
 };
 
+const deleteFile = async (req, res) => {
+    try {
+        const { id } = req.params;
+        await fileService.deleteFile(id);
+        res.json({ message: 'File deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
 export default {
     uploadFile,
-    getFileList
+    getFileList,
+    deleteFile
 };
