@@ -8,12 +8,17 @@ export default (sequelize, Sequelize) => {
         email: {
             type: Sequelize.STRING(255),
             unique: true,
-            allowNull: false,
+            allowNull: true,
         },
         password: {
             type: Sequelize.STRING(255),
             allowNull: false,
         },
+        phoneNumber: {
+            type: Sequelize.STRING(20),
+            field: 'phone_number',
+            allowNull: true,
+        }
     }, {
         timestamps: false,
         freezeTableName: true,
