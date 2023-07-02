@@ -8,31 +8,31 @@ import { jwtSecret } from '../env.dev.js';
 
 const signup = async (identifier, password) => {
     try {
+        const { email, phoneNumber } = identifier;
         const hashedPassword = await bcrypt.hash(password, 10);
 
         let existingUser;
         let validationSchema;
 
-        if (identifier.type === 'email') {
-            existingUser = await userAdapter.findUserByEmail(identifier.value);
+        if (email) {
+            existingUser = await userAdapter.findUserByEmail(email);
             validationSchema = Joi.string().email().required().label('Email');
         } else {
-            existingUser = await userAdapter.findUserByPhoneNumber(identifier.value);
+            existingUser = await userAdapter.findUserByPhoneNumber(phoneNumber);
             validationSchema = Joi.string().pattern(/^\+[1-9]\d{1,14}$/).required().label('Phone Number');
         }
 
         if (existingUser) {
-            throw new Error(`User with the provided ${identifier.type === 'email' ? 'email' : 'phone number'} already exists`);
+            throw new Error(`User with the provided ${email ? 'email' : 'phone number'} already exists`);
         }
 
-        const { error } = validationSchema.validate(identifier.value);
+        const { error } = validationSchema.validate(email || phoneNumber);
         if (error) {
-            throw new Error(`Invalid ${identifier.type === 'email' ? 'email' : 'phone number'} format`);
+            throw new Error(`Invalid ${email ? 'email' : 'phone number'} format`);
         }
 
-        const user = identifier.type === 'email'
-            ? await userAdapter.emailSignup(identifier.value, hashedPassword)
-            : await userAdapter.phoneNumberSignup(identifier.value, hashedPassword);
+
+        const user = await userAdapter.signup(email, phoneNumber, hashedPassword)
 
         const tokens = {
             bearerToken: await utils.generateBearerToken(user.id),
@@ -46,7 +46,6 @@ const signup = async (identifier, password) => {
         throw new Error(error.message);
     }
 };
-
 const signin = async (email, phoneNumber, password) => {
     try {
         let user;

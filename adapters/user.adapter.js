@@ -3,21 +3,32 @@ import db from '../models/index.model.js';
 const UsersModel = db.users;
 
 
-const emailSignup = async (email, hashedPassword) => {
+const signup = async (email, phoneNumber, hashedPassword) => {
     try {
-        return await UsersModel.create({ email, password: hashedPassword });
-    } catch (error) {
-        throw new Error(error)
-    }
-}
+        if (!email && !phoneNumber) {
+            throw new Error('Email or phoneNumber is required');
+        }
 
-const phoneNumberSignup = async (phoneNumber, hashedPassword) => {
-    try {
-        return await UsersModel.create({ phoneNumber, password: hashedPassword });
+        const userData = {
+            password: hashedPassword
+        };
+
+        if (email) {
+            userData.email = email;
+        }
+
+        if (phoneNumber) {
+            userData.phoneNumber = phoneNumber;
+        }
+
+        console.log(userData);
+
+        return await UsersModel.create(userData);
     } catch (error) {
-        throw new Error(error)
+        console.log(error);
+        throw new Error(error);
     }
-}
+};
 
 const findUserByEmail = async (email) => {
     try {
@@ -45,8 +56,7 @@ const findUserById = async (userId) => {
 };
 
 export default {
-    emailSignup,
-    phoneNumberSignup,
+    signup,
     findUserByEmail,
     findUserByPhoneNumber,
     findUserById
