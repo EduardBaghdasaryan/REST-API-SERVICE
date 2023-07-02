@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 import { jwtSecret } from '../env.dev.js';
 import db from '../models/index.model.js';
 

@@ -2,8 +2,7 @@ import express from 'express';
 
 import fileController from '../controllers/file.controller.js';
 
-import isAuth from "../middlewares/isAuth.js";
-
+import isAuth from '../middlewares/isAuth.js';
 
 const fileRouter = express.Router();
 
@@ -17,6 +16,6 @@ fileRouter.get('/:id', fileController.getFileById);
 
 fileRouter.get('/download/:id', fileController.downloadFileById);
 
-fileRouter.put('/update/:id', fileController.updateFileById)
+fileRouter.put('/update/:id', fileController.updateFileById);
 
 export default fileRouter;

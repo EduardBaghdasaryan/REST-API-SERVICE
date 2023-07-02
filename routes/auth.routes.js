@@ -11,5 +11,4 @@ authRouter.post('/signin', validateSignupData, authController.signin);
 
 authRouter.post('/signin/new_token', authController.refreshBearerToken);
 
-
 export default authRouter;
