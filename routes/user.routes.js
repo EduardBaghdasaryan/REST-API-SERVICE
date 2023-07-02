@@ -5,7 +5,7 @@ import isAuth from "../middlewares/isAuth.js";
 
 const userRouter = express.Router();
 
-userRouter.get('info/:id', isAuth, userController.getUserId);
+userRouter.get('/info/:id', isAuth, userController.getUserId);
 userRouter.get('/logout', isAuth, userController.logout);
 
 

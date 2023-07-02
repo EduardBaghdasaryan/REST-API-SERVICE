@@ -38,10 +38,9 @@ const findUserByPhoneNumber = async (phoneNumber) => {
     }
 };
 
-const findUserById = async (userId) => {
+const findUserById = async (id) => {
     try {
-        return await UsersModel.findOne({ id: userId });
-
+        return await UsersModel.findOne({ where: { id } });
     } catch (error) {
         throw new Error(error);
     }
