@@ -12,18 +12,30 @@ const invalidateToken = async (id) => {
 
 const createToken = async (id, token) => {
     try {
-        const newToken = await TokenModel.create({
+        return await TokenModel.create({
             id,
             token,
             isActive: true
         });
-        return newToken;
     } catch (error) {
+        console.log(error);
         throw new Error('Failed to create token');
     }
 };
 
+const updateToken = async (id, token) => {
+    try {
+        return await TokenModel.update(
+            { token, isActive: true },
+            { where: { id } }
+        );
+    } catch (error) {
+        console.error(error);
+        throw new Error('Failed to update token');
+    }
+}
 export default {
     invalidateToken,
-    createToken
+    createToken,
+    updateToken
 };

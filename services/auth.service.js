@@ -4,7 +4,7 @@ import userAdapter from '../adapters/user.adapter.js';
 import tokensAdapter from '../adapters/tokens.adapter.js';
 import jwt from 'jsonwebtoken';
 import Joi from 'joi';
-import { jwtSecret } from '../env.dev.js';
+import { refreshTokenSecretKey } from '../env.dev.js';
 
 const signup = async (identifier, password) => {
     try {
@@ -49,7 +49,6 @@ const signup = async (identifier, password) => {
 const signin = async (email, phoneNumber, password) => {
     try {
         let user;
-
         if (email) {
             user = await userAdapter.findUserByEmail(email);
         } else {
@@ -71,7 +70,7 @@ const signin = async (email, phoneNumber, password) => {
             refreshToken: await utils.generateRefreshToken(user.id),
         };
 
-        await tokensAdapter.createToken(user.id, tokens.bearerToken)
+        await tokensAdapter.updateToken(user.id, tokens.bearerToken)
 
         return tokens;
     } catch (error) {
@@ -81,9 +80,8 @@ const signin = async (email, phoneNumber, password) => {
 
 const refreshBearerToken = async (refreshToken) => {
     try {
-        const decoded = jwt.verify(refreshToken, jwtSecret);
+        const decoded = jwt.verify(refreshToken, refreshTokenSecretKey);
 
-        console.log(decoded);
 
         if (!decoded || !decoded.id) {
             throw new Error('Invalid refresh token');
@@ -95,7 +93,8 @@ const refreshBearerToken = async (refreshToken) => {
             throw new Error('User not found');
         }
 
-        const bearerToken = utils.generateBearerToken(user.id);
+        const bearerToken = await utils.generateBearerToken(user.id);
+        await tokensAdapter.updateToken(user.id, bearerToken);
 
         return {
             bearerToken,

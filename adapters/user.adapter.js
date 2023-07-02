@@ -4,28 +4,20 @@ const UsersModel = db.users;
 
 
 const signup = async (email, phoneNumber, hashedPassword) => {
+
+    if (!email && !phoneNumber) {
+        throw new Error('Email or phoneNumber is required');
+    }
+
+    const userData = {
+        password: hashedPassword,
+        ...(email && { email }),
+        ...(phoneNumber && { phoneNumber }),
+    };
+
     try {
-        if (!email && !phoneNumber) {
-            throw new Error('Email or phoneNumber is required');
-        }
-
-        const userData = {
-            password: hashedPassword
-        };
-
-        if (email) {
-            userData.email = email;
-        }
-
-        if (phoneNumber) {
-            userData.phoneNumber = phoneNumber;
-        }
-
-        console.log(userData);
-
         return await UsersModel.create(userData);
     } catch (error) {
-        console.log(error);
         throw new Error(error);
     }
 };
