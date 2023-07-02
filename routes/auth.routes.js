@@ -1,12 +1,13 @@
 import express from 'express';
 
 import authController from '../controllers/auth.controller.js';
+import validateSignupData from '../middlewares/validators.js';
 
 const authRouter = express.Router();
 
-authRouter.post('/signup', authController.signup);
+authRouter.post('/signup', validateSignupData, authController.signup);
 
-authRouter.post('/signin', authController.signin);
+authRouter.post('/signin', validateSignupData, authController.signin);
 
 authRouter.post('/signin/new_token', authController.refreshBearerToken);
 

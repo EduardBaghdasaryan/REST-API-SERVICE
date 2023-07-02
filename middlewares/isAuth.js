@@ -19,7 +19,6 @@ const authenticateMiddleware = async (req, res, next) => {
       return res.status(403).json({ error: 'Invalid Token.' });
     }
 
-
     const { id } = decodedToken;
     const tokenExists = await TokenModel.findOne({ where: { id } });
 

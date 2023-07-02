@@ -7,7 +7,7 @@ const createFile = async (fileData) => {
     try {
         return await FileModel.create(fileData);
     } catch (error) {
-        throw new Error(error.message);
+        throw new Error(error);
     }
 };
 
@@ -57,7 +57,7 @@ const updateFileById = async (id, file) => {
 
         return updatedFile;
     } catch (error) {
-        throw new Error('Failed to update the file in the database');
+        throw new Error(error);
     }
 };
 export default {

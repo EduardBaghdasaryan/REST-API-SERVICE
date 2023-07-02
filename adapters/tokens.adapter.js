@@ -17,8 +17,7 @@ const createToken = async (id, token) => {
             token,
         });
     } catch (error) {
-        console.log(error);
-        throw new Error('Failed to create token');
+        throw new Error(error);
     }
 };
 

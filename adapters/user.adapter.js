@@ -26,7 +26,7 @@ const findUserByEmail = async (email) => {
     try {
         return await UsersModel.findOne({ where: { email } });
     } catch (error) {
-        throw new Error(error.message);
+        throw new Error(error);
     }
 };
 
@@ -34,7 +34,7 @@ const findUserByPhoneNumber = async (phoneNumber) => {
     try {
         return await UsersModel.findOne({ where: { phoneNumber } });
     } catch (error) {
-        throw new Error(error.message);
+        throw new Error(error);
     }
 };
 
