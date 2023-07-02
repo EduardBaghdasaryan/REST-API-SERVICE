@@ -24,7 +24,7 @@ app.use('/api/file', upload.single('file'))
 app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/file', fileRouter);
-app.use('/api/', userRouter);
+app.use('/api', userRouter);
 
 
 

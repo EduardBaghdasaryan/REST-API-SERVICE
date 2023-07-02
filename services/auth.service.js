@@ -70,7 +70,7 @@ const signin = async (email, phoneNumber, password) => {
             refreshToken: await utils.generateRefreshToken(user.id),
         };
 
-        await tokensAdapter.updateToken(user.id, tokens.bearerToken)
+        await tokensAdapter.createToken(user.id, tokens.bearerToken)
 
         return tokens;
     } catch (error) {
@@ -94,7 +94,7 @@ const refreshBearerToken = async (refreshToken) => {
         }
 
         const bearerToken = await utils.generateBearerToken(user.id);
-        await tokensAdapter.updateToken(user.id, bearerToken);
+        await tokensAdapter.createToken(user.id, bearerToken);
 
         return {
             bearerToken,

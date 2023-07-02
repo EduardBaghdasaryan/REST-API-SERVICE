@@ -8,10 +8,7 @@ export default (sequelize, Sequelize) => {
         token: {
             type: Sequelize.STRING(255),
             allowNull: true,
-        },
-        isActive: {
-            type: Sequelize.BOOLEAN,
-        },
+        }
     }, {
         timestamps: false,
         freezeTableName: true,

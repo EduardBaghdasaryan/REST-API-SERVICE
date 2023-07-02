@@ -21,7 +21,7 @@ const authenticateMiddleware = async (req, res, next) => {
 
 
     const { id } = decodedToken;
-    const tokenExists = await TokenModel.findOne({ where: { id, isActive: true } });
+    const tokenExists = await TokenModel.findOne({ where: { id } });
 
     if (!tokenExists) {
       return res.status(401).json({ error: 'Authentication failed.' });

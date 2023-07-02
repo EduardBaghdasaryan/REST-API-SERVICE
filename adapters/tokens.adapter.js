@@ -4,7 +4,7 @@ const TokenModel = db.tokens;
 
 const invalidateToken = async (id) => {
     try {
-        await TokenModel.update({ isActive: false }, { where: { id } });
+        await TokenModel.destroy({ where: { id } });
     } catch (error) {
         throw new Error(error)
     }
@@ -15,7 +15,6 @@ const createToken = async (id, token) => {
         return await TokenModel.create({
             id,
             token,
-            isActive: true
         });
     } catch (error) {
         console.log(error);
@@ -23,19 +22,8 @@ const createToken = async (id, token) => {
     }
 };
 
-const updateToken = async (id, token) => {
-    try {
-        return await TokenModel.update(
-            { token, isActive: true },
-            { where: { id } }
-        );
-    } catch (error) {
-        console.error(error);
-        throw new Error('Failed to update token');
-    }
-}
+
 export default {
     invalidateToken,
     createToken,
-    updateToken
 };
