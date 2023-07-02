@@ -1,0 +1,311 @@
+{
+	"info": {
+		"_postman_id": "fe8cf2ca-a696-440d-aeeb-b18a261ffe47",
+		"name": "REST-API-SERVICE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23513135"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\" : \"pass\",\n    \"phoneNumber\" : \"+1234567810\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev}}/api/auth/signup",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\" : \"pass\",\n    \"phoneNumber\" : \"+1233527890\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev}}/api/auth/signin",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/signin/new_token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"refreshToken\" : \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjksImlhdCI6MTY4ODMwMTkwNiwiZXhwIjo4NjU2ODgzMDE5MDZ9.4ghOnOrZQ6jj00JaZBMTIfYPnoLl9y6NL7TkklVRxms\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev}}/api/auth/signin/new_token",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signin",
+								"new_token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "file",
+			"item": [
+				{
+					"name": "file/upload",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{dev}}/api/file/upload",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"file",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "file/list",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{dev}}/api/file/list",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"file",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "file/delete/:id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{dev}}/api/file/delete/32",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"file",
+								"delete",
+								"32"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "file/:id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "file/download/:id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dev}}/api/file/download/33",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"file",
+								"download",
+								"33"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "file/update/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/home/goya/Desktop/images.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{dev}}/api/file/update/34",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"file",
+								"update",
+								"34"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "info",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzAsImlhdCI6MTY4ODMwNDc2NSwiZXhwIjoxNzQ4MzA0NzY1fQ.bVuKCk7sRaS6LO8gUDHh-R4Qg4eJ__Ywe9JvXuLwN2Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dev}}/api/info/28",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"info",
+								"28"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{dev}}/api/logout",
+							"host": [
+								"{{dev}}"
+							],
+							"path": [
+								"api",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "dev",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
