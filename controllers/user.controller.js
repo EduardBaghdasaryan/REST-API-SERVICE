@@ -1,6 +1,5 @@
 
 import userService from '../services/user.service.js';
-import utils from '../utils/utils.js';
 
 const getUserId = async (req, res) => {
     try {
@@ -8,7 +7,6 @@ const getUserId = async (req, res) => {
         const { email, phoneNumber } = await userService.getUserId(id);
         res.json({ email, phoneNumber });
     } catch (error) {
-        console.error(error);
         res.status(500).json({ error: 'Failed to retrieve user ID' });
     }
 };
@@ -22,7 +20,6 @@ const logout = async (req, res) => {
 
         res.json({ message: 'Logout successful' });
     } catch (error) {
-        console.error('Logout error:', error);
         res.status(500).json({ error: 'Failed to logout' });
     }
 };

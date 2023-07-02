@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt';
 import utils from '../utils/utils.js'
-import validator from 'validator';
 import userAdapter from '../adapters/user.adapter.js';
 import tokensAdapter from '../adapters/tokens.adapter.js';
 import jwt from 'jsonwebtoken';
+import Joi from 'joi';
 import { jwtSecret } from '../env.dev.js';
 
 const signup = async (identifier, password) => {
