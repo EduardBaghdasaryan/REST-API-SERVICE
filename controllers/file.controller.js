@@ -48,8 +48,8 @@ const getFileById = async (req, res) => {
 const downloadFileById = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name } = await fileService.getFileById(id);
-        const result = `${filesPath}/files/${name}`
+        const { path } = await fileService.getFileById(id);
+        const result = `${filesPath}/${path}`
 
         res.download(result);
     } catch (error) {
