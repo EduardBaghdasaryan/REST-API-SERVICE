@@ -1,7 +1,5 @@
 import db from '../models/index.model.js';
-import fs from 'fs'
 import utils from '../utils/utils.js';
-import { filesPath } from '../env.dev.js';
 
 const FileModel = db.files;
 
@@ -49,7 +47,7 @@ const updateFileById = async (id, file) => {
         }
 
         const oldFilePath = existingFile.path;
-        
+
         await utils.deleteFileFromStorage(oldFilePath)
 
         const updatedFile = await existingFile.update({

@@ -4,6 +4,7 @@ import Sequelize from "sequelize";
 
 import fileModel from "./file.model.js";
 import usersModel from "./users.model.js";
+import tokensModel from "./tokens.model.js";
 
 
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
@@ -21,7 +22,8 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 
 const db = {};
 
-db.files = fileModel(sequelize, Sequelize)
-db.users = usersModel(sequelize, Sequelize)
+db.files = fileModel(sequelize, Sequelize);
+db.users = usersModel(sequelize, Sequelize);
+db.tokens = tokensModel(sequelize, Sequelize);
 
 export default db;

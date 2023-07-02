@@ -1,4 +1,5 @@
 import userAdapter from '../adapters/user.adapter.js';
+import tokensAdapter from '../adapters/tokens.adapter.js';
 
 const getUserId = async (id) => {
     try {
@@ -9,6 +10,15 @@ const getUserId = async (id) => {
     }
 };
 
+const invalidateToken = async (id) => {
+    try {
+        return await tokensAdapter.invalidateToken(id)
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 export default {
     getUserId,
+    invalidateToken
 };

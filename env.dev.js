@@ -14,8 +14,11 @@ const dbUser = process.env.DB_USER || '';
 const dbPassword = process.env.DB_PASSWORD || '';
 const jwtExpiration = process.env.JWT_EXPIRATION || '';
 const jwtSecret = process.env.JWT_SECRET || ''
-const refreshTokenSecretKey = process.env.REFRESH_TOKEN_SECRET
-const refreshTokenExpiration = process.env.REFRESH_TOKEN_EXPIRATION
+const refreshTokenSecretKey = process.env.REFRESH_TOKEN_SECRET;
+const refreshTokenExpiration = process.env.REFRESH_TOKEN_EXPIRATION;
+const redisHost = process.env.REDIS_HOST;
+const redisPort = process.env.REDIS_PORT
+
 
 const filesPath = path.join(__dirname);
 
@@ -51,5 +54,7 @@ export {
   jwtSecret,
   filesPath,
   refreshTokenSecretKey,
-  refreshTokenExpiration
+  refreshTokenExpiration,
+  redisHost,
+  redisPort
 };

@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import { jwtSecret, jwtExpiration, refreshTokenExpiration, refreshTokenSecretKey } from '../env.dev.js';
-
 import fs from 'fs';
 import path from 'path';
 
@@ -31,10 +30,9 @@ const deleteFileFromStorage = (filename) => {
     });
 };
 
-
 export default {
     generateBearerToken,
     generateRefreshToken,
     getExtension,
-    deleteFileFromStorage
+    deleteFileFromStorage,
 }
