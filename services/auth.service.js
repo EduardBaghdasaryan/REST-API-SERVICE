@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import utils from '../utils/utils.js'
-import validator from 'validator';
+import Joi from 'joi';
 import userAdapter from '../adapters/user.adapter.js';
 import tokensAdapter from '../adapters/tokens.adapter.js';
 import jwt from 'jsonwebtoken';
@@ -13,15 +13,19 @@ const signup = async (identifier, password) => {
         let existingUser;
         if (identifier === 'email') {
             existingUser = await userAdapter.findUserByEmail(identifier);
-            if (!validator.isEmail(identifier)) {
-                throw new Error('Invalid email format');
-            }
+            validationSchema = Joi.string().email().required().label('Email');
         } else {
             existingUser = await userAdapter.findUserByPhoneNumber(identifier);
+            validationSchema = Joi.string().pattern(/^\+[1-9]\d{1,14}$/).required().label('Phone Number');
         }
 
         if (existingUser) {
             throw new Error(`User with the provided ${identifier === 'email' ? 'email' : 'phone number'} already exists`);
+        }
+
+        const { error } = validationSchema.validate(identifier);
+        if (error) {
+            throw new Error(`Invalid ${identifier === 'email' ? 'email' : 'phone number'} format`);
         }
 
         const user = identifier === 'email'
@@ -77,8 +81,6 @@ const signin = async (email, phoneNumber, password) => {
 const refreshBearerToken = async (refreshToken) => {
     try {
         const decoded = jwt.verify(refreshToken, jwtSecret);
-
-        console.log(decoded);
 
         if (!decoded || !decoded.id) {
             throw new Error('Invalid refresh token');

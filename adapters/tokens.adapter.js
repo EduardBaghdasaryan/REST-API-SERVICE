@@ -6,7 +6,6 @@ const invalidateToken = async (id) => {
     try {
         await TokenModel.update({ isActive: false }, { where: { id } });
     } catch (error) {
-        console.log(error);
         throw new Error(error)
     }
 };

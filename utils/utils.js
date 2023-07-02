@@ -20,7 +20,6 @@ const deleteFileFromStorage = (filename) => {
     const filePath = path.join(filesPath, filename);
     return new Promise((resolve, reject) => {
         fs.unlink((filePath), (error) => {
-            console.log(1111111111111);
             if (error) {
                 reject(new Error(error));
             } else {

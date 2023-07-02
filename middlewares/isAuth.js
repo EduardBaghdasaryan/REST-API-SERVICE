@@ -28,7 +28,6 @@ const authenticateMiddleware = async (req, res, next) => {
     }
 
     req.user = { id };
-    console.log(req.user);
     next();
   } catch (err) {
     return res.status(401).json({ error: 'Authentication failed.' });

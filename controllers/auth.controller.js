@@ -12,7 +12,6 @@ const signup = async (req, res, next) => {
         const { bearerToken, refreshToken } = await authService.signup(identifier, password);
         res.json({ bearerToken, refreshToken });
     } catch (error) {
-        console.log(error);
         res.status(500).json({ error: error.message });
     }
 };
@@ -38,7 +37,6 @@ const refreshBearerToken = async (req, res, next) => {
         const { bearerToken } = await authService.refreshBearerToken(refreshToken);
         res.json({ bearerToken });
     } catch (error) {
-        console.log(error);
         res.status(500).json({ error: error.message });
     }
 };

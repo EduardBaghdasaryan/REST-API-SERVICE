@@ -16,7 +16,6 @@ const getUserId = async (req, res) => {
 
 const logout = async (req, res) => {
     try {
-        console.log(1111111111111);
         const { id } = req.user;
 
         await userService.invalidateToken(id);
