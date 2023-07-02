@@ -8,7 +8,7 @@ const signup = async (req, res, next) => {
             throw new Error('Email or phoneNumber is required');
         }
 
-        const identifier = email ? email : phoneNumber;
+        const identifier = email ? { type: 'email', value: email } : { type: 'phoneNumber', value: phoneNumber };
         const { bearerToken, refreshToken } = await authService.signup(identifier, password);
         res.json({ bearerToken, refreshToken });
     } catch (error) {

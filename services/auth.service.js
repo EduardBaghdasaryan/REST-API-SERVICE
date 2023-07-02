@@ -11,29 +11,35 @@ const signup = async (identifier, password) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         let existingUser;
-        if (identifier === 'email') {
-            existingUser = await userAdapter.findUserByEmail(identifier);
-            if (!validator.isEmail(identifier)) {
-                throw new Error('Invalid email format');
-            }
+        let validationSchema;
+
+        if (identifier.type === 'email') {
+            existingUser = await userAdapter.findUserByEmail(identifier.value);
+            validationSchema = Joi.string().email().required().label('Email');
         } else {
-            existingUser = await userAdapter.findUserByPhoneNumber(identifier);
+            existingUser = await userAdapter.findUserByPhoneNumber(identifier.value);
+            validationSchema = Joi.string().pattern(/^\+[1-9]\d{1,14}$/).required().label('Phone Number');
         }
 
         if (existingUser) {
-            throw new Error(`User with the provided ${identifier === 'email' ? 'email' : 'phone number'} already exists`);
+            throw new Error(`User with the provided ${identifier.type === 'email' ? 'email' : 'phone number'} already exists`);
         }
 
-        const user = identifier === 'email'
-            ? await userAdapter.emailSignup(identifier, hashedPassword)
-            : await userAdapter.phoneNumberSignup(identifier, hashedPassword);
+        const { error } = validationSchema.validate(identifier.value);
+        if (error) {
+            throw new Error(`Invalid ${identifier.type === 'email' ? 'email' : 'phone number'} format`);
+        }
+
+        const user = identifier.type === 'email'
+            ? await userAdapter.emailSignup(identifier.value, hashedPassword)
+            : await userAdapter.phoneNumberSignup(identifier.value, hashedPassword);
 
         const tokens = {
             bearerToken: await utils.generateBearerToken(user.id),
             refreshToken: await utils.generateRefreshToken(user.id),
         };
 
-        await tokensAdapter.createToken(user.id, tokens.bearerToken)
+        await tokensAdapter.createToken(user.id, tokens.bearerToken);
 
         return tokens;
     } catch (error) {
